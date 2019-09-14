@@ -1,5 +1,6 @@
 syms a b c d f g
-
+% system of equations at steady state with constants plugged in and
+% simplified
 eq1_1 = 0 == (55 * f) / 8 - (75 * a) / 8 + 745;
 eq2_1 = 0 == 5/2 - 1500 * b * exp(-2000000 / (1987 * d)) - (5 * b) / 2;
 eq3_1 = 0 == 1500 * b * exp(-2000000 / (1987 * d)) - (5 * c) / 2;
@@ -140,3 +141,4 @@ dFdCA0(a, b, c, d, f, ca0)  = diff(F_ForCA0, ca0, 1);
 C = dFdCA0(aa, bb, cc, dd, ff, CA0)
 
 %Part iv
+

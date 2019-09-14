@@ -1,0 +1,28 @@
+function [dsdt,qout]= endo_cstr_ode(t,s,s_steadyState)
+    % Motor Parameters
+    Lf=50; %H
+    Rf=25; %ohms
+    La=2; %H
+    Ra=0.5; %ohms
+    Kv=0.91; %V/(A rad/s)
+    J=5; %Nm
+    B=0.3; %J/(rad/s)
+    %Inputs at Steady-State
+    m1=36; %V
+    m2=360; %V
+    p=-280; %Nm=J
+    
+    %simulate
+    if t > 10; m1=38; end
+    if t > 50; m1=34; end
+
+ds1dt = v0 * (T0 - a) / V1 + U * A * (f - a) * (ro * Cp * V1)^-1;
+ds2dt = v0 * (CA0 - b) / V3 - k * exp(-1 * EE / (R * d)) * b;
+ds3dt = -v0 * c / V3 + k * exp(-1 * EE / (R * d)) * b;
+ds4dt = v0 * (gg - d) / V3 + ((dH) * k * exp(-1 * EE / (R * d)) * b) / (ro * Cp);
+ds5dt = v0 * (d - f) / V3 - U * A * (f - a) / (ro * Cp * V4);
+    
+    dsdt=[ds1dt;ds2dt;ds3dt;ds4dt;ds5dt];
+    qout=[s(1)*m1+s(2)*m2; s(3)*p];
+    end
+    
