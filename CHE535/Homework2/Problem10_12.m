@@ -62,8 +62,81 @@ eq3_1 = 0 == 1500 * bb * exp(-2000000 / (1987 * dd)) - (5 * c) / 2;
 cc = solve(eq3_1,[c]) % cc = 0.98461967755486456311228270612738
 
 sSSOP = transpose([aa,bb,cc,dd,ff,gg]) %
+%%%%%%% note to self -- Dont touch the above its working
 
 
+V1 = 4;
+V3 = 4;
+V4 = 4;
+v0 = 10;
+k = 1.5 * 10^3;
+EE = 2 * 10^3;
+R = 1.987;
+ro = 1000;
+Cp = 1;
+T0 = 298;
+dH = -2 * 10^5;
+U = 550;
+AA = 50;
+QQ = 2.845 * 10^6;
+CA0 = 1;
 
+S = transpose([a, b, c, d, f]);
 
+diffEq1 = v0 * (T0 - a) / V1 + U * AA * (f - a) * (ro * Cp * V1)^-1;
+diffEq2 = v0 * (CA0 - b) / V3 - k * exp(-1 * EE / (R * d)) * b;
+diffEq3 = -v0 * c / V3 + k * exp(-1 * EE / (R * d)) * b;
+diffEq4 = v0 * (gg - d) / V3 + ((dH) * k * exp(-1 * EE / (R * d)) * b) / (ro * Cp);
+diffEq5 = v0 * (d - f) / V3 - U * AA * (f - a) / (ro * Cp * V4);
 
+F = transpose([diffEq1, diffEq2, diffEq3, diffEq4, diffEq5]);
+
+% a = s(1) so dFds1 = dFda... etc
+dFda(a, b, c, d, f)  = diff(F, a, 1);
+dFdb(a, b, c, d, f)  = diff(F, b, 1);
+dFdc(a, b, c, d, f)  = diff(F, c, 1);
+dFdd(a, b, c, d, f)  = diff(F, d, 1);
+dFdf(a, b, c, d, f)  = diff(F, f, 1);
+
+A1 =dFda(aa, bb, cc, dd, ff)
+A2 =dFdb(aa, bb, cc, dd, ff)
+A3 =dFdc(aa, bb, cc, dd, ff)
+A4 =dFdd(aa, bb, cc, dd, ff)
+A5 =dFdf(aa, bb, cc, dd, ff)
+
+A = [A1, A2, A3, A4, A5]
+
+% Differential Equations in the form with QQ (our manipulated
+% variable)plugged in 
+syms Q 
+
+% T2 = T1 + Q/(v0*ro*Cp) -> T2 ==T1 + Q/(v0*ro*Cp)
+% T1 = a(Q) = T2 - Q/(v0*ro*Cp) =  (gg - Q/(v0*ro*Cp))
+% B = dFdm = dFdQ
+
+diffEq1_ForQ = v0 * (T0 - (gg - Q/(v0*ro*Cp))) / V1 + U * AA * (f - (gg - Q/(v0*ro*Cp))) * (ro * Cp * V1)^-1;
+diffEq2_ForQ = v0 * (CA0 - b) / V3 - k * exp(-1 * EE / (R * d)) * b;
+diffEq3_ForQ = -v0 * c / V3 + k * exp(-1 * EE / (R * d)) * b;
+diffEq4_ForQ = v0 * (gg - d) / V3 + ((dH) * k * exp(-1 * EE / (R * d)) * b) / (ro * Cp);
+diffEq5_ForQ = v0 * (d - f) / V3 - U * AA * (f - (gg - Q/(v0*ro*Cp))) / (ro * Cp * V4);
+
+F_ForQ = transpose([diffEq1_ForQ, diffEq2_ForQ, diffEq3_ForQ, diffEq4_ForQ, diffEq5_ForQ]);
+dFdQ(a, b, c, d, f, Q)  = diff(F_ForQ, Q, 1);
+B = dFdQ(aa, bb, cc, dd, ff, QQ)
+
+% T2 = T1 + Q/(v0*ro*Cp) -> T2 ==T1 + Q/(v0*ro*Cp)
+% T1 = a(Q) = T2 - Q/(v0*ro*Cp) =  (gg - Q/(v0*ro*Cp))
+% C = dFdm = dFdQ
+syms ca0
+diffEq1_ForCA0 = v0 * (T0 - a) / V1 + U * AA * (f - a) * (ro * Cp * V1)^-1;
+diffEq2_ForCA0 = v0 * (ca0 - b) / V3 - k * exp(-1 * EE / (R * d)) * b;
+diffEq3_ForCA0 = -v0 * c / V3 + k * exp(-1 * EE / (R * d)) * b;
+diffEq4_ForCA0 = v0 * (gg - d) / V3 + ((dH) * k * exp(-1 * EE / (R * d)) * b) / (ro * Cp);
+diffEq5_ForCA0 = v0 * (d - f) / V3 - U * AA * (f - a) / (ro * Cp * V4);
+
+F_ForCA0 = transpose([diffEq1_ForCA0, diffEq2_ForCA0, diffEq3_ForCA0, diffEq4_ForCA0, diffEq5_ForCA0]);
+
+dFdCA0(a, b, c, d, f, ca0)  = diff(F_ForCA0, ca0, 1);
+C = dFdCA0(aa, bb, cc, dd, ff, CA0)
+
+%Part iv
