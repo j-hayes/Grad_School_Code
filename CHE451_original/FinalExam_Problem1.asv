@@ -1,0 +1,32 @@
+import cubicEos.*
+T = 298.15;
+Tc=647.1; % Kelvin
+Pc=220.55; % bars
+w=0.345;
+R=83.14; % bar*cm^3/mol/K
+
+deltaHVapSteamTable = 2547.3-104.8;%KJ/Kg
+specificVolumeSteamTableLiquid = 1.003;%cm^3/g
+specificVolumeSteamTableVapor = 43400;%cm^3/g
+
+pressureInitiialGuess = 0.0267;
+
+%Part B
+pressureInitiialGuess = 0.031;
+pengRobinson = cubicEos(R,T,pressureInitiialGuess,Tc,Pc,w,'peng robinson');
+pengRobinsonPsat = fzero(@(pengRobinsonPsat) pengRobinson.calculateVaporPressureError(pengRobinsonPsat),pressureInitiialGuess);
+
+pengRobinsonDetlaT1 = cubicEos(R,T-1,pressureInitiialGuess,Tc,Pc,w,'peng robinson');
+pengRobinsonPSat1 = fzero(@(pengRobinsonPSat1) pengRobinsonDetlaT1.calculateVaporPressureError(pengRobinsonPSat1),pressureInitiialGuess);
+pengRobinsonDetlaT2 = cubicEos(R,T+1,pressureInitiialGuess,Tc,Pc,w,'peng robinson');
+pengRobinsonPSat2 = fzero(@(pengRobinsonPSat2) pengRobinsonDetlaT2.calculateVaporPressureError(pengRobinsonPSat2),pressureInitiialGuess);
+
+deltaHPengRobinson = T*(pengRobinson.Vv-pengRobinson.Vl)*(pengRobinsonPSat2-pengRobinsonPSat1)/(2); %bar * cm^3/mol
+deltaHByMassPengRobinson = deltaHPengRobinson/18.01528;  %bar * cm^3/g
+deltaHKiloJoulesPerKiloGramPengRobinson = deltaHByMassPengRobinson * 0.1; % bar*cm^3/g = 1/10 kJ/kg 
+
+%part c for peng robinson
+errorEnthalpyPengRobinson = 1-deltaHKiloJoulesPerKiloGramPengRobinson/deltaHVapSteamTable
+errorVolumeVaporPengRobinson = 1-pengRobinson.Vv/18.01528/specificVolumeSteamTableVapor
+errorVolumeLiquidPengRobinson = 1-pengRobinson.Vl/18.01528/specificVolumeSteamTableLiquid
+aaa=''
