@@ -193,27 +193,35 @@ end
 
 plot(t_nlin,s_nlin(:,1),'k',t_lin,x_lin(:,1)+sSSOP(1),'k--');
 title('Problem 2.13','FontSize',14,'FontName','Times New Roman');
-ylabel('Field Current (A)','FontSize',14,'FontName','Times New Roman');
+ylabel('Temperature T1 K','FontSize',14,'FontName','Times New Roman');
 xlabel('Time (s)','FontSize',14,'FontName','Times New Roman')
 legend('Nonlinear','Linear '); pause
+
+
 plot(t_nlin,s_nlin(:,2),'k',t_lin,x_lin(:,2)+sSSOP(2),'k--')
 title('Problem 2.13','FontSize',14,'FontName','Times New Roman');
-ylabel('Armature Current (A)','FontSize',14,'FontName','Times New Roman');
+ylabel('Ca concentration','FontSize',14,'FontName','Times New Roman');
+xlabel('Time (s)','FontSize',14,'FontName','Times New Roman')
+legend('Nonlinear','Linear '); pause
 
-% xlabel('Time (s)','FontSize',14,'FontName','Times New Roman')
-% legend('Nonlinear','Linear '); pause
-% plot(t_nlin,s_nlin(:,3),'k',t_lin,x_lin(:,3)+s_ss(3),'k--')
-% title('Problem 2.13','FontSize',14,'FontName','Times New Roman');
-% ylabel('Angular Speed (rad/s)','FontSize',14,'FontName','Times New Roman');
-% xlabel('Time (s)','FontSize',14,'FontName','Times New Roman')
-% legend('Nonlinear','Linear '); pause
-% plot(t_nlin,q_nlin(:,1)/1000,'k',t_lin,(z_lin(:,1)+q_ss(1))/1000,'k--')
-% title('Problem 2.13','FontSize',14,'FontName','Times New Roman');
-% ylabel('Power Electrical (kW)','FontSize',14,'FontName','Times New Roman');
-% xlabel('Time (s)','FontSize',14,'FontName','Times New Roman')
-% legend('Nonlinear','Linear '); pause
-% plot(t_nlin,q_nlin(:,2)/1000,'k',t_lin,(z_lin(:,2)+q_ss(2))/1000,'k--')
-% title('Problem 2.13','FontSize',14,'FontName','Times New Roman');
-% ylabel('Power Mechanical (kW)','FontSize',14,'FontName','Times New Roman');
-% xlabel('Time (s)','FontSize',14,'FontName','Times New Roman')
-% legend('Nonlinear','Linear '); pause
+plot(t_nlin,s_nlin(:,3),'k',t_lin,x_lin(:,3)+sSSOP(3),'k--')
+title('Problem 2.13','FontSize',14,'FontName','Times New Roman');
+ylabel('Cb concentration','FontSize',14,'FontName','Times New Roman');
+xlabel('Time (s)','FontSize',14,'FontName','Times New Roman')
+legend('Nonlinear','Linear '); pause
+
+
+plot(t_nlin,s_nlin(:,4),'k',t_lin,x_lin(:,4)+sSSOP(4),'k--');
+title('Problem 2.13','FontSize',14,'FontName','Times New Roman');
+ylabel('Temperature T3 K','FontSize',14,'FontName','Times New Roman');
+xlabel('Time (s)','FontSize',14,'FontName','Times New Roman')
+legend('Nonlinear','Linear '); pause
+
+plot(t_nlin,s_nlin(:,5),'k',t_lin,x_lin(:,5)+sSSOP(5),'k--');
+title('Problem 2.13','FontSize',14,'FontName','Times New Roman');
+ylabel('Temperature T4 K','FontSize',14,'FontName','Times New Roman');
+xlabel('Time (s)','FontSize',14,'FontName','Times New Roman')
+legend('Nonlinear','Linear '); pause
+
+
+
