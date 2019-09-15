@@ -81,17 +81,17 @@ BBd=sum*BB*ddt; GGd=sum*GG*ddt;
 NNN=round(100/dt); t_disc=zeros(1,NNN); x_disc=zeros(3,NNN); z_disc=zeros(2,NNN);
 uu=[0; 0]; ww=0;
 for ii=1:NNN-1
-t_disc(ii+1)=ii*dt;
-Case=1; t=t_disc(ii);
-if (Case == 1) %Case 1
-if t >= 10; uu=[2; 0]; end
-if t >= 50; uu=[-2; 0]; end
-else %Case 1
-if t >= 10; uu=[20; 0]; end
-if t >= 50; uu=[-10; 0]; end
-end
-x_disc(:,ii+1)=AAd*x_disc(:,ii)+BBd*uu+GGd*ww;
-z_disc(:,ii)=Dx*x_disc(:,ii)+Du*uu+Dw*ww;
+    t_disc(ii+1)=ii*dt;
+    Case=1; t=t_disc(ii);
+    if (Case == 1) %Case 1
+    if t >= 10; uu=[2; 0]; end
+    if t >= 50; uu=[-2; 0]; end
+    else %Case 1
+    if t >= 10; uu=[20; 0]; end
+    if t >= 50; uu=[-10; 0]; end
+    end
+    x_disc(:,ii+1)=AAd*x_disc(:,ii)+BBd*uu+GGd*ww;
+    z_disc(:,ii)=Dx*x_disc(:,ii)+Du*uu+Dw*ww;
 end
 z_disc(:,NNN)=z_disc(:,NNN-1);
 %Continuous-time Simulation

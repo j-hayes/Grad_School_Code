@@ -41,29 +41,29 @@ plot(t_nlin,s_nlin(:,1),'k',t_lin,x_lin(:,1)+s_ss(1),'k--');
 title('Case 1','FontSize',14,'FontName','Times New Roman');
 ylabel('Field Current (A)','FontSize',14,'FontName','Times New Roman');
 xlabel('Time (s)','FontSize',14,'FontName','Times New Roman')
-legend('Nonlinear','Linear '); pause
+legend('Nonlinear','Linear '); %
 
 plot(t_nlin,s_nlin(:,2),'k',t_lin,x_lin(:,2)+s_ss(2),'k--')
 title('Case 1','FontSize',14,'FontName','Times New Roman');
 ylabel('Armature Current (A)','FontSize',14,'FontName','Times New Roman');
 xlabel('Time (s)','FontSize',14,'FontName','Times New Roman')
-legend('Nonlinear','Linear '); pause
+legend('Nonlinear','Linear '); %
 
 plot(t_nlin,s_nlin(:,3),'k',t_lin,x_lin(:,3)+s_ss(3),'k--')
 title('Case 1','FontSize',14,'FontName','Times New Roman');
 ylabel('Angular Speed (rad/s)','FontSize',14,'FontName','Times New Roman');
 xlabel('Time (s)','FontSize',14,'FontName','Times New Roman')
-legend('Nonlinear','Linear '); pause
+legend('Nonlinear','Linear '); %
 plot(t_nlin,q_nlin(:,1)/1000,'k',t_lin,(z_lin(:,1)+q_ss(1))/1000,'k--')
 title('Case 1','FontSize',14,'FontName','Times New Roman');
 ylabel('Power Electrical (kW)','FontSize',14,'FontName','Times New Roman');
 xlabel('Time (s)','FontSize',14,'FontName','Times New Roman')
-legend('Nonlinear','Linear '); pause
+legend('Nonlinear','Linear '); %
 plot(t_nlin,q_nlin(:,2)/1000,'k',t_lin,(z_lin(:,2)+q_ss(2))/1000,'k--')
 title('Case 1','FontSize',14,'FontName','Times New Roman');
 ylabel('Power Mechanical (kW)','FontSize',14,'FontName','Times New Roman');
 xlabel('Time (s)','FontSize',14,'FontName','Times New Roman')
-legend('Nonlinear','Linear '); pause
+legend('Nonlinear','Linear '); %%%
 
 
 % Linear Continuous-time Model
@@ -81,17 +81,17 @@ BBd=sum*BB*ddt; GGd=sum*GG*ddt;
 NNN=round(100/dt); t_disc=zeros(1,NNN); x_disc=zeros(3,NNN); z_disc=zeros(2,NNN);
 uu=[0; 0]; ww=0;
 for ii=1:NNN-1
-t_disc(ii+1)=ii*dt;
-Case=1; t=t_disc(ii);
-if (Case == 1) %Case 1
-if t >= 10; uu=[2; 0]; end
-if t >= 50; uu=[-2; 0]; end
-else %Case 1
-if t >= 10; uu=[20; 0]; end
-if t >= 50; uu=[-10; 0]; end
-end
-x_disc(:,ii+1)=AAd*x_disc(:,ii)+BBd*uu+GGd*ww;
-z_disc(:,ii)=Dx*x_disc(:,ii)+Du*uu+Dw*ww;
+    t_disc(ii+1)=ii*dt;
+    Case=1; t=t_disc(ii);
+    if (Case == 1) %Case 1
+    if t >= 10; uu=[2; 0]; end
+    if t >= 50; uu=[-2; 0]; end
+    else %Case 1
+    if t >= 10; uu=[20; 0]; end
+    if t >= 50; uu=[-10; 0]; end
+    end
+    x_disc(:,ii+1)=AAd*x_disc(:,ii)+BBd*uu+GGd*ww;
+    z_disc(:,ii)=Dx*x_disc(:,ii)+Du*uu+Dw*ww;
 end
 z_disc(:,NNN)=z_disc(:,NNN-1);
 %Continuous-time Simulation
@@ -105,32 +105,32 @@ plot(t_disc,x_disc(1,:)+s_ss(1),'k*:',t_lin,x_lin(:,1)+s_ss(1),'k');
 title('Case 1','FontSize',14,'FontName','Times New Roman');
 ylabel('Field Current (A)','FontSize',14,'FontName','Times New Roman');
 xlabel('Time (s)','FontSize',14,'FontName','Times New Roman')
-legend('Discrete-time','Continuous-time'); pause
+legend('Discrete-time','Continuous-time'); %%%%%%
 
 plot(t_disc,x_disc(2,:)+s_ss(2),'k*:',t_lin,x_lin(:,2)+s_ss(2),'k')
 title('Case 1','FontSize',14,'FontName','Times New Roman');
 ylabel('Armature Current (A)','FontSize',14,'FontName','Times New Roman');
 xlabel('Time (s)','FontSize',14,'FontName','Times New Roman')
-legend('Discrete-time','Continuous-time'); pause
+legend('Discrete-time','Continuous-time'); %%%%%%
 
 plot(t_disc,x_disc(3,:)+s_ss(3),'k*:',t_lin,x_lin(:,3)+s_ss(3),'k')
 title('Case 1','FontSize',14,'FontName','Times New Roman');
 ylabel('Angular Speed (rad/s)','FontSize',14,'FontName','Times New Roman');
 xlabel('Time (s)','FontSize',14,'FontName','Times New Roman')
-legend('Discrete-time','Continuous-time'); pause
+legend('Discrete-time','Continuous-time'); %%%%%%
 
 plot(t_disc,(z_disc(1,:)+q_ss(1))/1000,'k*:',t_lin,...
 (z_lin(:,1)+q_ss(1))/1000,'k')
 title('Case 1','FontSize',14,'FontName','Times New Roman');
 ylabel('Power Electrical (kW)','FontSize',14,'FontName','Times New Roman');
 xlabel('Time (s)','FontSize',14,'FontName','Times New Roman')
-legend('Discrete-time','Continuous-time'); pause
+legend('Discrete-time','Continuous-time'); %%%%%%
 
 plot(t_disc,(z_disc(2,:)+q_ss(2))/1000,'k*:',t_lin,...
 (z_lin(:,2)+q_ss(2))/1000,'k')
 title('Case 1','FontSize',14,'FontName','Times New Roman');
 ylabel('Power Mechanical (kW)','FontSize',14,'FontName','Times New Roman');
 xlabel('Time (s)','FontSize',14,'FontName','Times New Roman')
-legend('Discrete-time','Continuous-time'); pause
+legend('Discrete-time','Continuous-time'); %%%%%%
 
 

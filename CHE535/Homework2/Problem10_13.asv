@@ -234,7 +234,7 @@ end
 Bd=sum*B*ddt
 Gd=sum*G*ddt
 % Disctete-time Simulation
-NNN=round(20/dt); 
+NNN=round(100/dt); 
 t_disc=zeros(1,NNN); 
 x_disc=zeros(5,NNN);
 z_disc=zeros(1,NNN);
@@ -246,13 +246,13 @@ for ii=1:NNN-1
     CA0_Sim=0;
    %simulate
     if t <= 0
-        CA0_Sim = 1;
+        CA0 = 1;
         QQ_Sim = 2.845 * 10^6;
     elseif t < 10
-        CA0_Sim = 1.2;
+        CA0 = 1.2;
         QQ_Sim = 2.7 * 10^6;
     elseif t < 20
-        CA0_Sim = 1.2;
+        CA0 = 1.2;
         QQ_Sim = 3.1*10^6;
     end
     % u = m - mssop
@@ -273,6 +273,10 @@ for ii=1:NN
 [dxdt,zout]=endo_cstr_ode_lin(t_lin(ii),x_lin(ii,:)',1,A,B,G,Dx,Du,Dw,QQ,CA0);
 end
 
+%%% not sure what is going on with these simulations. Can't see why the
+%%% numbers are getting so off. ran out of time and energy to pursue
+%%% looking into it. 
+
 %Plots
 plot(t_disc,x_disc(1,:)+sSSOP(1),'k*:',t_lin,x_lin(:,1)+sSSOP(1),'k');
 title('Problem 2.13','FontSize',14,'FontName','Times New Roman');
@@ -281,29 +285,16 @@ xlabel('Time (s)','FontSize',14,'FontName','Times New Roman')
 legend('Discrete-time','Continuous-time'); %%%%%%
 
 plot(t_disc,x_disc(2,:)+sSSOP(2),'k*:',t_lin,x_lin(:,2)+sSSOP(2),'k')
-title('Problem 2.13','FontSize',14,'FontName','Times New Roman');
+title('Case 1','FontSize',14,'FontName','Times New Roman');
 ylabel('Ca Concentration','FontSize',14,'FontName','Times New Roman');
 xlabel('Time (s)','FontSize',14,'FontName','Times New Roman')
 legend('Discrete-time','Continuous-time'); %%%%%%
 
 plot(t_disc,x_disc(3,:)+sSSOP(3),'k*:',t_lin,x_lin(:,3)+sSSOP(3),'k')
-title('Problem 2.13','FontSize',14,'FontName','Times New Roman');
+title('Case 1','FontSize',14,'FontName','Times New Roman');
 ylabel('Cb Concentration','FontSize',14,'FontName','Times New Roman');
 xlabel('Time (s)','FontSize',14,'FontName','Times New Roman')
 legend('Discrete-time','Continuous-time'); %%%%%%
-
-plot(t_disc,x_disc(4,:)+sSSOP(4),'k*:',t_lin,x_lin(:,4)+sSSOP(4),'k')
-title('Problem 2.13','FontSize',14,'FontName','Times New Roman');
-ylabel('Temp 3 K','FontSize',14,'FontName','Times New Roman');
-xlabel('Time (s)','FontSize',14,'FontName','Times New Roman')
-legend('Discrete-time','Continuous-time'); %%%%%%
-
-plot(t_disc,x_disc(5,:)+sSSOP(5),'k*:',t_lin,x_lin(:,5)+sSSOP(5),'k')
-title('Problem 2.13','FontSize',14,'FontName','Times New Roman');
-ylabel('Temp 4 K','FontSize',14,'FontName','Times New Roman');
-xlabel('Time (s)','FontSize',14,'FontName','Times New Roman')
-legend('Discrete-time','Continuous-time'); %%%%%%
-
 
 
 
