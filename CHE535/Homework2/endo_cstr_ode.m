@@ -13,7 +13,7 @@ function [dsdt, qout] = endo_cstr_ode(t, s)
     U = 550;
     AA = 50;
     CA0 = 0;
-    Q = 0;
+    QQ = 0;
 
     % t < 0: CA0 = 1.0 kmol e/m3 and Q = 2.845×106 kcal/h r
     %- t > 0 and t < 10: CA0 = 1.2 kmol e/m3 and Q = 2.7×106 kcal/h r
@@ -30,21 +30,21 @@ function [dsdt, qout] = endo_cstr_ode(t, s)
         CA0 = 1.2;
         QQ = 3.1*10^6;
     end
-
     a = s(1);
     b = s(2);
     c = s(3);
     d = s(4);
     f = s(5);
 
-    ds1dt = v0 * (T0 - a) / V1 + U * A * (f - a) * (ro * Cp * V1)^-1;
+    gg =  a + QQ/(v0*ro*Cp);% t2
+    g_economic = (100 * v0 * s(3)) - (5*QQ);
+    
+    ds1dt = v0 * (T0 - a) / V1 + U * AA * (f - a) * (ro * Cp * V1)^-1;
     ds2dt = v0 * (CA0 - b) / V3 - k * exp(-1 * EE / (R * d)) * b;
     ds3dt = -v0 * c / V3 + k * exp(-1 * EE / (R * d)) * b;
     ds4dt = v0 * (gg - d) / V3 + ((dH) * k * exp(-1 * EE / (R * d)) * b) / (ro * Cp);
-    ds5dt = v0 * (d - f) / V3 - U * A * (f - a) / (ro * Cp * V4);
+    ds5dt = v0 * (d - f) / V3 - U * AA * (f - a) / (ro * Cp * V4);
 
-    g = 100 * v0 * ro * S(3) - 5 * QQ;
-
-    dsdt = [ds1dt; ds2dt; ds3dt; ds4dt; ds5dt];
-    qout = [g];
+    dsdt = double([ds1dt; ds2dt; ds3dt; ds4dt; ds5dt]);
+    qout = double([g_economic]);
 end

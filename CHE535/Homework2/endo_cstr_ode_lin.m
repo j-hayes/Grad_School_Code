@@ -1,24 +1,26 @@
 
-function [dxdt,zout]= endo_cstr_ode_lin(t,x,Case)
-AA=[-0.5 0 0; ...
--80.8 -0.25 -0.655; ...
-46.3 0.262 -0.06];
-BB=[ 0.02 0; 0 0.5; 0 0];
-GG=[ 0; 0; 0.2];
-Dx=[36 360 0; 0 0 -280];
-Du=[1.44 254; 0 0];
-Dw=[177];
-u=[0; 0];
-w=0;
+function [dxdt,zout]= endo_cstr_ode_lin(t,x,dummyvar,A,B,G,Dx,Du,Dw, Q_SSOP,CA0_SSOP)
 
-if (Case == 1) %Case 1
-if t > 10; u=[2; 0]; end
-if t > 50; u=[-2; 0]; end
 
-else %Case 2
-if t > 10; u=[20; 0]; end
-if t > 50; u=[-10; 0]; end
+QQ=0;
+CA0=0;
+
+%simulate
+if t <= 0
+CA0 = 1;
+QQ = 2.845 * 10^6;
+elseif t < 10
+CA0 = 1.2;
+QQ = 2.7 * 10^6;
+elseif t < 20
+CA0 = 1.2;
+QQ = 3.1*10^6;
 end
-dxdt=AA*x+ BB*u+GG*w;
+% u = m - mssop
+u = [(QQ - Q_SSOP)];
+%w = p - p_ssop
+w = [(CA0 - CA0_SSOP)];
+
+dxdt=A*x+B*u+G*w;
 zout=Dx*x+Du*u+Dw*w;
 end

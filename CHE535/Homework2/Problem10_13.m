@@ -1,3 +1,4 @@
+clear all
 syms a b c d f g
 % system of equations at steady state with constants plugged in and
 % simplified
@@ -62,7 +63,7 @@ dd = solve(eq2_1,[d]) % dd = 449.79851178098028152234320308384
 eq3_1 = 0 == 1500 * bb * exp(-2000000 / (1987 * dd)) - (5 * c) / 2;
 cc = solve(eq3_1,[c]) % cc = 0.98461967755486456311228270612738
 
-sSSOP = transpose([aa,bb,cc,dd,ff,gg]) %
+sSSOP = double(transpose([aa,bb,cc,dd,ff])) % steady state calcs from book confirmed 
 %%%%%%% note to self -- Dont touch the above its working
 
 
@@ -105,7 +106,7 @@ A3 =dFdc(aa, bb, cc, dd, ff)
 A4 =dFdd(aa, bb, cc, dd, ff)
 A5 =dFdf(aa, bb, cc, dd, ff)
 
-A = [A1, A2, A3, A4, A5]
+A = double([A1, A2, A3, A4, A5])
 
 % Differential Equations in the form with QQ (our manipulated
 % variable)plugged in 
@@ -123,7 +124,7 @@ diffEq5_ForQ = v0 * (d - f) / V3 - U * AA * (f - (gg - Q/(v0*ro*Cp))) / (ro * Cp
 
 F_ForQ = transpose([diffEq1_ForQ, diffEq2_ForQ, diffEq3_ForQ, diffEq4_ForQ, diffEq5_ForQ]);
 dFdQ(a, b, c, d, f, Q)  = diff(F_ForQ, Q, 1);
-B = dFdQ(aa, bb, cc, dd, ff, QQ)
+B = double(dFdQ(aa, bb, cc, dd, ff, QQ))
 
 % T2 = T1 + Q/(v0*ro*Cp) -> T2 ==T1 + Q/(v0*ro*Cp)
 % T1 = a(Q) = T2 - Q/(v0*ro*Cp) =  (gg - Q/(v0*ro*Cp))
@@ -138,7 +139,81 @@ diffEq5_ForCA0 = v0 * (d - f) / V3 - U * AA * (f - a) / (ro * Cp * V4);
 F_ForCA0 = transpose([diffEq1_ForCA0, diffEq2_ForCA0, diffEq3_ForCA0, diffEq4_ForCA0, diffEq5_ForCA0]);
 
 dFdCA0(a, b, c, d, f, ca0)  = diff(F_ForCA0, ca0, 1);
-C = dFdCA0(aa, bb, cc, dd, ff, CA0)
+G = double(dFdCA0(aa, bb, cc, dd, ff, CA0))
+
+g_economic = (100 * v0 * c) - (5*Q);
+h = [g_economic]; %q = h output variables of interest
+
+dhda(c, Q)  = diff(h, a, 1);
+dhdb(c, Q)  = diff(h, b, 1);
+dhdc(c, Q)  = diff(h, c, 1);
+dhdd(c, Q)  = diff(h, d, 1);
+dhdf(c, Q)  = diff(h, f, 1);
+
+Dx1 =dhda(cc,QQ);
+Dx2 =dhdb(cc,QQ);
+Dx3 =dhdc(cc,QQ);
+Dx4 =dhdd(cc,QQ);
+Dx5 =dhdf(cc,QQ);
+
+Dx = double([Dx1, Dx2, Dx3, Dx4, Dx5])
+
+%m = Q
+dhdm(c,Q)  = diff(h, Q, 1);
+Du1 =dhdm(cc,QQ);
+Du = double([Du1])
+%p = CAO
+dhdp(c,Q)  = diff(h, ca0, 1);
+Dw1 =dhdp(cc,QQ);
+Dw = double([Dw1])
+
+
+
+
 
 %Part iv
+g_economic_ss =  (100 * v0 * cc) - (5*QQ);
+h_ss = [g_economic_ss];
+[t_nlin,s_nlin]=ode45('endo_cstr_ode',[0 20],double(sSSOP));
+[t_lin,x_lin]=ode45('endo_cstr_ode_lin',[0 20],sSSOP - sSSOP,1,A,B,G,Dx,Du,Dw,QQ,CA0);
+[NN,dumb]=size(t_nlin); 
+q_nlin=zeros(NN,2);
 
+for ii=1:NN
+[dsdt,qout]=endo_cstr_ode(t_nlin(ii),s_nlin(ii,:)');
+q_nlin(ii,:)=qout';
+end
+[NN,dumb]=size(t_lin); z_lin=zeros(NN,2);
+for ii=1:NN
+[dxdt,zout]=endo_cstr_ode_lin(t_lin(ii),x_lin(ii,:)',1,A,B,G,Dx,Du,Dw,QQ,CA0);
+z_lin(ii,:)=zout';
+end
+
+%Plots
+
+plot(t_nlin,s_nlin(:,1),'k',t_lin,x_lin(:,1)+sSSOP(1),'k--');
+title('Problem 2.13','FontSize',14,'FontName','Times New Roman');
+ylabel('Field Current (A)','FontSize',14,'FontName','Times New Roman');
+xlabel('Time (s)','FontSize',14,'FontName','Times New Roman')
+legend('Nonlinear','Linear '); pause
+plot(t_nlin,s_nlin(:,2),'k',t_lin,x_lin(:,2)+sSSOP(2),'k--')
+title('Problem 2.13','FontSize',14,'FontName','Times New Roman');
+ylabel('Armature Current (A)','FontSize',14,'FontName','Times New Roman');
+
+% xlabel('Time (s)','FontSize',14,'FontName','Times New Roman')
+% legend('Nonlinear','Linear '); pause
+% plot(t_nlin,s_nlin(:,3),'k',t_lin,x_lin(:,3)+s_ss(3),'k--')
+% title('Problem 2.13','FontSize',14,'FontName','Times New Roman');
+% ylabel('Angular Speed (rad/s)','FontSize',14,'FontName','Times New Roman');
+% xlabel('Time (s)','FontSize',14,'FontName','Times New Roman')
+% legend('Nonlinear','Linear '); pause
+% plot(t_nlin,q_nlin(:,1)/1000,'k',t_lin,(z_lin(:,1)+q_ss(1))/1000,'k--')
+% title('Problem 2.13','FontSize',14,'FontName','Times New Roman');
+% ylabel('Power Electrical (kW)','FontSize',14,'FontName','Times New Roman');
+% xlabel('Time (s)','FontSize',14,'FontName','Times New Roman')
+% legend('Nonlinear','Linear '); pause
+% plot(t_nlin,q_nlin(:,2)/1000,'k',t_lin,(z_lin(:,2)+q_ss(2))/1000,'k--')
+% title('Problem 2.13','FontSize',14,'FontName','Times New Roman');
+% ylabel('Power Mechanical (kW)','FontSize',14,'FontName','Times New Roman');
+% xlabel('Time (s)','FontSize',14,'FontName','Times New Roman')
+% legend('Nonlinear','Linear '); pause

@@ -23,14 +23,17 @@ q_ss=[if_ss*Vf+ia_ss*Va; w_ss*TL]
 
 [t_nlin,s_nlin]=ode45('motor_mod_ode',[0 100],s_ss,1);
 [t_lin,x_lin]=ode45('motor_mod_ode_lin',[0 100],s_ss-s_ss,1);
-[NN,dumb]=size(t_nlin); q_nlin=zeros(NN,2);
+[NN,dumb]=size(t_nlin); 
+q_nlin=zeros(NN,2);
 
 for ii=1:NN
-[dsdt,qout]=motor_mod_ode(t_nlin(ii),s_nlin(ii,:)',1); q_nlin(ii,:)=qout';
+[dsdt,qout]=motor_mod_ode(t_nlin(ii),s_nlin(ii,:)',1); 
+q_nlin(ii,:)=qout';
 end
 [NN,dumb]=size(t_lin); z_lin=zeros(NN,2);
 for ii=1:NN
-[dxdt,zout]=motor_mod_ode_lin(t_lin(ii),x_lin(ii,:)',1); z_lin(ii,:)=zout';
+[dxdt,zout]=motor_mod_ode_lin(t_lin(ii),x_lin(ii,:)',1); 
+z_lin(ii,:)=zout';
 end
 %Plots
 
