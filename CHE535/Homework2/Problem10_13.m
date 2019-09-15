@@ -195,33 +195,33 @@ plot(t_nlin,s_nlin(:,1),'k',t_lin,x_lin(:,1)+sSSOP(1),'k--');
 title('Problem 2.13','FontSize',14,'FontName','Times New Roman');
 ylabel('Temperature T1 K','FontSize',14,'FontName','Times New Roman');
 xlabel('Time (s)','FontSize',14,'FontName','Times New Roman')
-legend('Nonlinear','Linear '); %pause
+legend('Nonlinear','Linear '); pause;
 
 
 plot(t_nlin,s_nlin(:,2),'k',t_lin,x_lin(:,2)+sSSOP(2),'k--')
 title('Problem 2.13','FontSize',14,'FontName','Times New Roman');
 ylabel('Ca concentration','FontSize',14,'FontName','Times New Roman');
 xlabel('Time (s)','FontSize',14,'FontName','Times New Roman')
-legend('Nonlinear','Linear '); %pause
+legend('Nonlinear','Linear ');pause;
 
 plot(t_nlin,s_nlin(:,3),'k',t_lin,x_lin(:,3)+sSSOP(3),'k--')
 title('Problem 2.13','FontSize',14,'FontName','Times New Roman');
 ylabel('Cb concentration','FontSize',14,'FontName','Times New Roman');
 xlabel('Time (s)','FontSize',14,'FontName','Times New Roman')
-legend('Nonlinear','Linear '); %pause
+legend('Nonlinear','Linear '); pause;
 
 
 plot(t_nlin,s_nlin(:,4),'k',t_lin,x_lin(:,4)+sSSOP(4),'k--');
 title('Problem 2.13','FontSize',14,'FontName','Times New Roman');
 ylabel('Temperature T3 K','FontSize',14,'FontName','Times New Roman');
 xlabel('Time (s)','FontSize',14,'FontName','Times New Roman')
-legend('Nonlinear','Linear '); %pause
+legend('Nonlinear','Linear '); pause;
 
 plot(t_nlin,s_nlin(:,5),'k',t_lin,x_lin(:,5)+sSSOP(5),'k--');
 title('Problem 2.13','FontSize',14,'FontName','Times New Roman');
 ylabel('Temperature T4 K','FontSize',14,'FontName','Times New Roman');
 xlabel('Time (s)','FontSize',14,'FontName','Times New Roman')
-legend('Nonlinear','Linear '); %%pause
+legend('Nonlinear','Linear '); pause;
 
 dt=.1; 
 Ad=expm(A*dt)
@@ -278,31 +278,32 @@ plot(t_disc,x_disc(1,:)+sSSOP(1),'k*:',t_lin,x_lin(:,1)+sSSOP(1),'k');
 title('Problem 2.13','FontSize',14,'FontName','Times New Roman');
 ylabel('Temp 1 K','FontSize',14,'FontName','Times New Roman');
 xlabel('Time (s)','FontSize',14,'FontName','Times New Roman')
-legend('Discrete-time','Continuous-time'); %%%%%%
+legend('Discrete-time','Continuous-time'); pause;
 
 plot(t_disc,x_disc(2,:)+sSSOP(2),'k*:',t_lin,x_lin(:,2)+sSSOP(2),'k')
 title('Problem 2.13','FontSize',14,'FontName','Times New Roman');
 ylabel('Ca Concentration','FontSize',14,'FontName','Times New Roman');
 xlabel('Time (s)','FontSize',14,'FontName','Times New Roman')
-legend('Discrete-time','Continuous-time'); %%%%%%
+legend('Discrete-time','Continuous-time'); pause;
 
 plot(t_disc,x_disc(3,:)+sSSOP(3),'k*:',t_lin,x_lin(:,3)+sSSOP(3),'k')
 title('Problem 2.13','FontSize',14,'FontName','Times New Roman');
 ylabel('Cb Concentration','FontSize',14,'FontName','Times New Roman');
 xlabel('Time (s)','FontSize',14,'FontName','Times New Roman')
-legend('Discrete-time','Continuous-time'); %%%%%%
+legend('Discrete-time','Continuous-time'); pause;
+
 
 plot(t_disc,x_disc(4,:)+sSSOP(4),'k*:',t_lin,x_lin(:,4)+sSSOP(4),'k')
 title('Problem 2.13','FontSize',14,'FontName','Times New Roman');
 ylabel('Temp 3 K','FontSize',14,'FontName','Times New Roman');
 xlabel('Time (s)','FontSize',14,'FontName','Times New Roman')
-legend('Discrete-time','Continuous-time'); %%%%%%
+legend('Discrete-time','Continuous-time');pause;
 
 plot(t_disc,x_disc(5,:)+sSSOP(5),'k*:',t_lin,x_lin(:,5)+sSSOP(5),'k')
 title('Problem 2.13','FontSize',14,'FontName','Times New Roman');
 ylabel('Temp 4 K','FontSize',14,'FontName','Times New Roman');
 xlabel('Time (s)','FontSize',14,'FontName','Times New Roman')
-legend('Discrete-time','Continuous-time'); %%%%%%
+legend('Discrete-time','Continuous-time');pause;
 
 
 
