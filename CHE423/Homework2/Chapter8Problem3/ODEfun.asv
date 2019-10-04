@@ -1,0 +1,26 @@
+function dYfuncvecdt = ODEfun(t,Yfuncvec, reversible)
+Ca = Yfuncvec(1); 
+Cb = Yfuncvec(2); 
+Cc = Yfuncvec(3); 
+% Explicit equations
+
+k1=0.4;
+k2=0.01;
+negk1 = .3;
+ra = 0-k1*Ca;
+rb =k1*Ca-k2*Cb;
+
+ 
+if strcmp(reversible,'first')
+    ra = ra + negk1*Cb;
+    rb = rb - negk1*Cb;
+elseif strcmp(reversible,'both')
+    
+end
+rc=k2*Cb;
+% Differential equations
+dCadt = ra; 
+dCbdt = rb; 
+dCcdt = rc; 
+dYfuncvecdt = [dCadt; dCbdt; dCcdt]; 
+
