@@ -34,11 +34,11 @@ aproximationFunction = sum(aproximations)
 %calculate errors
 l=1;
 errors = [];
-while l < 1000
-    x = l*.1;
+while l < 2000
+    x = l*.01;
     actual(l) = 1/x;
     estimated(l) = double(subs(aproximationFunction,x));
-    errors(l) = (actual(l) - estimated(l))/actual(l);
+    errors(l) = abs(actual(l) - estimated(l))/actual(l);
     x_values(l) = x;
     l=l+1;
 end
@@ -50,7 +50,7 @@ legend('actual','aproximation')
 
 subplot(2,1,2)
 title('Errors');
-plot(x, errors);
+plot(x_values, errors);
 
 
 function result = weightedInnerProduct(u,v)

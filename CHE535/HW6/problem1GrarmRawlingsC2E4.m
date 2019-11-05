@@ -34,26 +34,24 @@ aproximationFunction = sum(aproximations)
 %calculate errors
 l=1;
 errors = [];
-while l < 100
-    actual = 1/l;
-    estimated = double(subs(aproximationFunction,l));
-    errors(l) = (actual - estimated)/actual;
+while l < 500
+    x = l*.01;
+    actual(l) = 1/x;
+    estimated(l) = double(subs(aproximationFunction,x));
+    errors(l) = abs((actual(l) - estimated(l))/actual(l));
+    x_values(l) = x;
     l=l+1;
 end
 
 subplot(2,1,1);
-title('approximation of 1/t');
-legend('aproximation', 'actual')
-fplot(aproximationFunction,[0 100]);
-hold on
-fplot(f,[0 100])
-hold off
-
+plot(x_values,actual,x_values,estimated);
+title('approximation of 1/t');  
+legend('actual','aproximation')
 
 subplot(2,1,2)
-title('Eerors');
-
-f(errors,[1,100]);
+plot(x_values, errors);
+title('Errors');
+legend('percent error')
 
 
 function result = weightedInnerProduct(u,v)
