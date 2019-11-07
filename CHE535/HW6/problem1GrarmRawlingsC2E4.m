@@ -21,7 +21,7 @@ while i <= 5
     i = i + 1;
 end 
 
-
+q
 %apply alphas to create aproximation function
 k = 1;
 aproximations = [sym(0);sym(0);sym(0);sym(0);sym(0)];
