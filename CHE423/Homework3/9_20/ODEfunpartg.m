@@ -1,8 +1,11 @@
-function dYfuncvecdt = ODEfun(t,Yfuncvec,params)
-C = Yfuncvec; 
-
+function dYfuncvecdt = ODEfunpartg(t,Yfuncvec,params)
+C = Yfuncvec(1);
+I = Yfuncvec(2);
 % Explicit equations
-u = params;
+u0 = params(1);
+Cmax = params(2)
+
+u  = u0*(1-C/Cmax);
 
 hourOfDay = mod(t,24);
 
@@ -13,5 +16,7 @@ end
 
 % Differential equations
 dCdt=  f*C*u;
-dYfuncvecdt = [dCdt;] 
+dIdt=  2*f*I*u;
+dYfuncvecdt = [dCdt;dIdt] 
 
+ 
