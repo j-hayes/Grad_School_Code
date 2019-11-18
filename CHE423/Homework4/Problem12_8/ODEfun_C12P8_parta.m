@@ -7,14 +7,14 @@ P = Yfuncvec(4);
 %paramters
 Fa0 = 5;
 Ca0 = 2;
-CI0 = Ca0*2;
-FI0 = 2*Fa0;
+CI0 = Ca0*8;
+FI0 = 8*Fa0;
 CpI = 18;
 CpA = 160;
 CpB = 160;
 E = 10000;
 dHrx = -20000;
-Kc0 = 1000;
+Kc0 = 1;
 roB = 1.2;
 T0 = 300;
 k1 = 0.1;

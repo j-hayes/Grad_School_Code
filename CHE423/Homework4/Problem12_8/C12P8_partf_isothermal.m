@@ -4,13 +4,13 @@ clear all;
 X0 = 0;
 Fa0 = 5;
 Ca0 = 2;
-CI0 = Ca0*2;
+CI0 = Ca0*8;
 CpI = 18;
 CpA = 160;
 CpB = 160;
 E = 10000;
 dHrx = -20000;
-Kc0 = 1000;
+Kc0 = 1;
 roB = 1.2;
 %T1 = T0 = Ta0 all calculatiosn will use T0;
 T0 = 300;
@@ -32,11 +32,10 @@ WSpan = 0:.1:W;
 
 
 params = [0];
-[WOut,Output]=ode45(@(W,X)ODEfun_C12P8_parta(W,X,params),WSpan,[X0,T0,Ta0,P0]);
+[WOut,Output]=ode45(@(W,X)ODEfun_C12P8_partf(W,X,params),WSpan,[X0,T0,P0]);
 XOut = Output(:,1);
 TOut = Output(:,2);
-TaOut = Output(:,3);
-POut = Output(:,4);
+POut = Output(:,3);
 
 R = 1.987;%cal/mol*K;
 
@@ -46,6 +45,9 @@ Xe = Kc./(1+Kc);
 k = k0*exp((E/R)*((1/T0)-(1./TOut)));
 ra_prime = (-k*Ca0).*(1-(1+1./Kc).*XOut); 
 rateOfDisappearance = -ra_prime;
+Qr = (ra_prime*dHrx); %Qr = Qg for isothermal 
+TaOut = (TOut)-((ra_prime.*dHrx)/(Ua/roB));
+
 VOut = WOut./roB;
 
 subplot(4,1,1);
@@ -53,24 +55,24 @@ plot(VOut, XOut,VOut, Xe);
 xlabel('Volume');
 ylabel('Conversion');
 legend('X','Xe');
-title('Pressure vs Volume down the reactor cocurrent');
+title('Pressure vs Volume down the reactor isothermal');
 
 subplot(4,1,2);
-plot(VOut, POut);
+plot(VOut, Qr);
 xlabel('Volume');
-ylabel('Pressure kPa');
-title('Pressure vs Volume down the reactor cocurrent');
+ylabel('Heat Removed cal');
+title('Heat removed vs Volume down the reactor isothermal');
 
 subplot(4,1,3);
 plot(VOut, TOut, VOut, TaOut);
 xlabel('Volume');
 ylabel('Temperature K');
 legend('T','Ta');
-title('Temperature vs Volume down the reactor cocurrent');
+title('Temperature vs Volume down the reactor isothermal');
 
 subplot(4,1,4);
 plot(VOut, rateOfDisappearance);
 xlabel('Volume');
 ylabel('Rate of disappearance');
-title('Rate of dissapearce vs Volume down the reactor cocurrent');
+title('Rate of dissapearce vs Volume down the reactor isothermal');
 
