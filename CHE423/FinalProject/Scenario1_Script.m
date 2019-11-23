@@ -10,7 +10,7 @@ V_PFR_inner = L*pi*D1^2/4;
 V_PFR_outer = L*pi*D2^2/4;
 V_Jacket = (L*pi*D1^2/4) - V_PFR_outer;
 r = (D1/2);
-R = D1 + (D4-D1); + .1; % inner pipe + everything else + small gap for airflow
+R = D1 + 2*(D4-D1); + .1; % inner pipe + everything else + small gap for airflow
 VCSTR = (pi*(r^2)*(2*pi*R))/2;%volume of torus/2 
 
 heatTransferArea = pi*D2*L;%m^2
@@ -74,7 +74,7 @@ while X3_iterator < 1
     V_SolveForXCSTR = (Fa2*(X3_iterator-X2))/(-ra);
     
     V_error_CSTR = abs((VCSTR - V_SolveForXCSTR)/VCSTR);
-    if V_error_CSTR < .02
+    if V_error_CSTR < .01
         foundCSTRSolution = true;
         break;
     end    
