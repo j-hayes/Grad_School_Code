@@ -33,24 +33,36 @@ X2 = Output(53,1);
 T2 = Output(53,2);
 
 V_SolveForXCSTR = 0;
+Ca2 = Ca0*(1-X2);
 X2_iterator = X2; 
+ThetaC_CSTR = (Fa0*X2)/(Fa0*(1-X2));
+foundCSTRSolution = 0;
 %numerical guess and check for T3 and X3 in CSTR
-while X2_iterator < 1
+while X2_iterator < 1 
     T3 = T2 + (dHrxn*X2)/Cps;
-    Ca_pfr1 = Ca0*(1-X_pfr1);
-    Cb_pfr1 = Ca_pfr1;
-    Cc_pfr1 = Ca0*X_pfr1;
 
-    k_pfr_1 = getkAtTemperature(T0_k, T_pfr1, k0, E, R);
-    Kc_pfr_1 = getKcAtTemperature(T0_Kc, T_pfr1, Kc0, dHrxn, R);
+    Ca_CSTR = Ca2*(1-X2_iterator);
+    Cb_CSTR = Ca_CSTR;
+    Cc_CSTR = Ca2*(ThetaC_CSTR+X2_iterator);
 
-ra = -k_pfr_1*((Ca_pfr1*Cb_pfr1)-(Cc_pfr1/Kc_pfr_1));
+    k_CSTR = getkAtTemperature(T0_k, T3, k0, E, R);
 
+    Kc_CSTR  = getKcAtTemperature(T0_Kc, T3, Kc0, dHrxn, R);
 
-    k_cstr = getkAtTemperature(T0_k, T3, k0, E, R);
-    ra = 
-    V_SolveForXCSTR = Fa0*X/(k_cstr*(-ra)) ;
-
+    ra = -k_CSTR*((Ca_CSTR*Cb_CSTR)-(Cc_CSTR/Kc_CSTR));
+    V_SolveForXCSTR = (Fa0*X2_iterator)/(k_CSTR*(-ra)) ;
+    
+    V_error_CSTR = (VCSTR - V_SolveForXCSTR)/VCSTR;
+    if V_error_CSTR < .01
+        foundCSTRSolution = true;
+        break;
+    end
+    
     X2_iterator = X2_iterator + .05; 
 end
+if foundCSTRSolution ~= 1 
+    error('no solution to the CSTR found');
+end
+X3 = X2_iterator
+T3
 
