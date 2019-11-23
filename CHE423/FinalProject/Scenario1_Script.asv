@@ -45,13 +45,9 @@ VSpan = 0:(V_PFR_inner/100):V_PFR_inner;
 params = [Ca0 ; Cb0 ; volumetricFlowRateFeed; Fa0; Cps; Ua; mDotCp ; Cpcool; T0_k ; T0_Kc ; k0; Kc0; dHrxn ; E ;R];
 [VNoInert,Output_PFR1]=ode45(@(V,X)ODE_CoCurrentPFR(V,X,params),VSpan,[X0;T0;Ta0]);
 
-X_PFR1 = Output_PFR1(:,1);
-T_PFR1 = Output_PFR1(:,2);
-Ta_PFR1 = Output_PFR1(:,3);
-
-X2 = X_PFR1(101);
-T2 = T_PFR1(101);
-Ta2 = Ta_PFR1(101);
+X2 = Output_PFR1(101,1);
+T2 = Output_PFR1(101,2);
+Ta2 = Output_PFR1(101,3);
 
 V_SolveForXCSTR = 0;
 Ca2 = Ca0*(1-X2);
@@ -98,37 +94,23 @@ Ta3 = Ta2;
 params = [Ca3 ; Cb3 ; volumetricFlowRateFeed; Fa3; Cps; Ua; mDotCp ; Cpcool; T0_k ; T0_Kc ; k0; Kc0; dHrxn ; E ;R];
 [VNoInert,Output_PFR2]=ode45(@(V,X)ODE_CoCurrentPFR(V,X,params),VSpan,[X3;T3;Ta3]);
 
-
-X_PFR2 = Output_PFR2(:,1);
-T_PFR2 = Output_PFR2(:,2);
-Ta_PFR2 = Output_PFR2(:,3);
-
-X4 = X_PFR2(101);
-T4 = T_PFR2(101);
-Ta4 = Ta_PFR2(101);
+X4 = Output_PFR2(101,1)
+T4 = Output_PFR2(101,2)
+Ta4 = Output_PFR2(101,3)
 
 subplot(4,1,1);
-plot(VSpan, X_PFR1);
+plot(VSpan, X2);
 xlabel('Volume');
 ylabel('conversion');
 title('conversion pfr1 cocurrent');
 
 subplot(4,1,2);
-plot(VSpan, T_PFR1, VSpan, Ta_PFR1);
-xlabel('Volume');
-ylabel('Temperature');
-legend('T','Ta');
-title('temperature pfr1 cocurrent');
-
-subplot(4,1,3);
-plot(VSpan, X_PFR2);
-xlabel('Volume');
-ylabel('conversion');
-title('conversion pfr2 cocurrent');
-
-subplot(4,1,4);
-plot(VSpan, T_PFR2, VSpan, Ta_PFR2);
+plot(VSpan, T2, Vspan, Ta2);
 xlabel('Volume');
 ylabel('Temperature');
 legend('T','Ta')
-title('temperature pfr2 cocurrent');
+title('conversion pfr1 cocurrent');
+
+plot(VSpan, X4);
+plot(VSpan, T4)
+
