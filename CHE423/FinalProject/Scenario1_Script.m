@@ -16,7 +16,7 @@ VCSTR = (pi*(r^2)*(2*pi*R))/2;%volume of torus/2
 heatTransferArea = pi*D2*L;%m^2
 
 U = 127; %W/m^2 *K
-Ua = U*heatTransferArea;% W/K  params
+Ua = U*heatTransferArea;% (J/m^3 s K)
 
 X0 = 0;
 Ca0 = 1000; % mol/m^3
@@ -24,17 +24,17 @@ Cb0 = Ca0;
 volumetricFlowRateFeed = .32;%m^3/s
 Fa0 = Ca0*volumetricFlowRateFeed;
 Cps = 30;%cal/m
-mDotCp = 50; % mol/s
-specificHeatCoolant = 1.685;
+mDotCp = .01; % mol/s
+specificHeatCoolant = 1.685;%KJ/kg;
 molecularWeightCoolant = 190;%g/mol
-calPerKj = (1/.004184);
+calPerkJ = (1/.004184);
 gramPerKg =  (1/1000);
-Cpcool = specificHeatCoolant*gramPerKg*molecularWeightCoolant*calPerKj;
+Cpcool = specificHeatCoolant*gramPerKg*molecularWeightCoolant*calPerkJ;
 
 T0_k = 300; %  Kelvin initial temperature for the k1 &pass this in as a parameter 
 T0_Kc = 450; % Kelvin initial temperature for the Kc1 &pass this in as a parameter
 T0 = 273.15 + 30;
-Ta0 = T0;
+Ta0 = 273.15 + 20;
 k0 = .01;
 Kc0 = 10;
 dHrxn = 6000;
