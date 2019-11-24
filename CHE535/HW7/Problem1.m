@@ -61,15 +61,15 @@ A = sym(zeros(N,N));
 b = sym(zeros(N,1));
 phi = sym(zeros(N,1));
 phi(1) = 1*cos(0*z);
-b(1) = getInnerProduct(g,phi(1)) + Tr*phi(1);
+b(1) = (1/h)*(-1*getInnerProduct(g,phi(1)) + Tr*phi(1));
 
-i = 1;
-while i <= N
-    if i > 1
-        phi(i) = 2^(1/2)*cos((i-1)*pi*z);
-        b(i) = h*(getInnerProduct(g,phi(i)) + Tr*subs(phi(i),1));
+j = 1;
+while j <= N
+    if j > 1
+        phi(j) = 2^(1/2)*cos((j-1)*pi*z);
+        b(j) = (1/h)*(-1*getInnerProduct(g,phi(j)) + Tr*subs(phi(j),1));
     end
-     i = i +1;
+     j = j +1;
 end
 i =1;
 while i <= N
