@@ -10,21 +10,21 @@ V_PFR_inner = L*pi*D1^2/4;
 V_PFR_outer = L*pi*D2^2/4;
 V_Jacket = (L*pi*D1^2/4) - V_PFR_outer;
 r = (D1/2);
-R = D1 + 2*(D4-D1); + .1; % inner pipe + everything else + small gap for airflow
+R = D1 + 2*(D4-D1) + .1; % inner pipe + everything else + small gap for airflow
 VCSTR = (pi*(r^2)*(2*pi*R))/2;%volume of torus/2 
 
-heatTransferArea = pi*D2*L;%m^2
+a = D2/D2^2;%m^2
 
 U = 127; %W/m^2 *K
-Ua = U*heatTransferArea;% (J/m^3 s K)
+Ua = U*a;% (J/m^3 s K)
 
 X0 = 0;
 Ca0 = 1000; % mol/m^3
 Cb0 = Ca0;
-volumetricFlowRateFeed = .32;%m^3/s
+volumetricFlowRateFeed = .35;%m^3/s
 Fa0 = Ca0*volumetricFlowRateFeed;
 Cps = 30;%cal/m
-mDotCp = .01; % mol/s
+mDotCp = .1; % mol/s
 specificHeatCoolant = 1.685;%KJ/kg;
 molecularWeightCoolant = 190;%g/mol
 calPerkJ = (1/.004184);
@@ -43,7 +43,7 @@ R = 1.987;%cal/(mol*K)
 VSpan = 0:(V_PFR_inner/100):V_PFR_inner; 
 
 params = [Ca0 ; Cb0 ; volumetricFlowRateFeed; Fa0; Cps; Ua; mDotCp ; Cpcool; T0_k ; T0_Kc ; k0; Kc0; dHrxn ; E ;R];
-[VNoInert,Output_PFR1]=ode45(@(V,X)ODE_CoCurrentPFR(V,X,params),VSpan,[X0;T0;Ta0]);
+[VOut_1,Output_PFR1]=ode45(@(V,X)ODE_CoCurrentPFR(V,X,params),VSpan,[X0;T0;Ta0]);
 
 X_PFR1 = Output_PFR1(:,1);
 T_PFR1 = Output_PFR1(:,2);
@@ -96,7 +96,7 @@ Ta3 = Ta2;
 
 
 params = [Ca3 ; Cb3 ; volumetricFlowRateFeed; Fa3; Cps; Ua; mDotCp ; Cpcool; T0_k ; T0_Kc ; k0; Kc0; dHrxn ; E ;R];
-[VNoInert,Output_PFR2]=ode45(@(V,X)ODE_CoCurrentPFR(V,X,params),VSpan,[X3;T3;Ta3]);
+[VOut_2,Output_PFR2]=ode45(@(V,X)ODE_CoCurrentPFR(V,X,params),VSpan,[X3;T3;Ta3]);
 
 
 X_PFR2 = Output_PFR2(:,1);
