@@ -12,7 +12,7 @@ ThetaC_CSTR = (Fc2)/(Fa2);
 foundCSTRSolution = 0;
 %numerical guess and check for T and X3 in CSTR
 
-while X3_iterator < 1 
+while X3_iterator <= 1 
     T = Tin + (scenarioParams.dHrxn*X3_iterator)/scenarioParams.Cps;
 
     Ca_CSTR = Ca2*(1-X3_iterator);
@@ -27,7 +27,7 @@ while X3_iterator < 1
     Volume = (Fa2*(X3_iterator-Xin))/(-ra);
     
     V_error_CSTR = abs((scenarioParams.VCSTR - Volume)/scenarioParams.VCSTR);
-    if V_error_CSTR < .01
+    if V_error_CSTR < .05
         foundCSTRSolution = true;
         break;
     end    

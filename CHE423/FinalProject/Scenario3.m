@@ -1,4 +1,7 @@
-function Scenario1(scenarioParams)
+function Scenario3(scenarioParams)
+%counter current pfr followed by adiabatic CSTR followed by a counter current pfr
+%inital temp of each jacket is the same temperature (the coolant feed is
+%split in two and enters the two jackets independently
 params = [scenarioParams.Ca0; ...
     scenarioParams.Cb0;...
     scenarioParams.volumetricFlowRateFeed;...
@@ -14,11 +17,16 @@ params = [scenarioParams.Ca0; ...
     scenarioParams.dHrxn ;...
     scenarioParams.E;...
     scenarioParams.R; ...
-    false
+    true
     ];
 
-[VOut_1,Output_PFR1]=ode45(@(V,X)ODE_PFR(V,X,params), ...
-scenarioParams.VSpan,[scenarioParams.X0;scenarioParams.T0;scenarioParams.Ta0]);
+
+Output_PFR1 = SolveCounterCurrentPFR(scenarioParams, ...
+            params, ...
+            scenarioParams.Ta0-50,...
+            scenarioParams.T0,...
+            scenarioParams.X0);
+
 
 X_PFR1 = Output_PFR1(:,1);
 T_PFR1 = Output_PFR1(:,2);
@@ -33,7 +41,7 @@ Ta2 = Ta_PFR1(end);
 Ca3 = scenarioParams.Ca0*(1-X3);
 Cb3 = Ca3;
 Fa3 = scenarioParams.Fa0*(1-X3);
-Ta3 = Ta2;
+Ta4 = Ta2; %outlet of jacket goes to inlet of other countercurrent jacket
 
 params = [Ca3 ;
     Cb3 ;  ...
@@ -50,9 +58,13 @@ params = [Ca3 ;
     scenarioParams.dHrxn ;...
     scenarioParams.E;...
     scenarioParams.R; ...
-    false
+    true
     ];
-[VOut_2,Output_PFR2]=ode45(@(V,X)ODE_PFR(V,X,params),scenarioParams.VSpan,[X3;T3;Ta3]);
+Output_PFR2 = SolveCounterCurrentPFR(scenarioParams, ...
+    params, ... 
+    Ta4, ...
+    T3, ...
+    X3);
 
 
 X_PFR2 = Output_PFR2(:,1);
@@ -67,26 +79,26 @@ subplot(4,1,1);
 plot(scenarioParams.VSpan, X_PFR1);
 xlabel('Volume');
 ylabel('conversion');
-title('conversion pfr1 cocurrent');
+title('conversion pfr1 counter current');
 
 subplot(4,1,2);
 plot(scenarioParams.VSpan, T_PFR1, scenarioParams.VSpan, Ta_PFR1);
 xlabel('Volume');
 ylabel('Temperature');
 legend('T','Ta');
-title('temperature pfr1 cocurrent');
+title('temperature pfr1 counter current');
 
 subplot(4,1,3);
 plot(scenarioParams.VSpan, X_PFR2);
 xlabel('Volume');
 ylabel('conversion');
-title('conversion pfr2 cocurrent');
+title('conversion pfr2 counter current');
 
 subplot(4,1,4);
 plot(scenarioParams.VSpan, T_PFR2, scenarioParams.VSpan, Ta_PFR2);
 xlabel('Volume');
 ylabel('Temperature');
 legend('T','Ta')
-title('temperature pfr2 cocurrent');
+title('temperature counter current');
 
 end

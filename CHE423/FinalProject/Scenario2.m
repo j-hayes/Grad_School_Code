@@ -25,9 +25,9 @@ X_PFR1 = Output_PFR1(:,1);
 T_PFR1 = Output_PFR1(:,2);
 Ta_PFR1 = Output_PFR1(:,3);
 
-X2 = X_PFR1(101);
-T2 = T_PFR1(101);
-Ta2 = Ta_PFR1(101);
+X2 = X_PFR1(end);
+T2 = T_PFR1(end);
+Ta2 = Ta_PFR1(end);
 
 [T3, X3] = AdiabaticCSTR(scenarioParams, X2,T2);%numerical guess and check for T3 and X3 in CSTR
 
@@ -53,27 +53,15 @@ params = [Ca3 ;
     scenarioParams.R; ...
     true
     ];
-
-TaError = 1000;
-guessTa3 = Ta4+.1;%initial guess of a temp just barely higher than Ta4
-while TaError > .01 || isnan(TaError) 
-
-    [VOut_2,Output_PFR2]=ode45(@(V,X)ODE_PFR(V,X,params),scenarioParams.VSpan,[X3;T3;guessTa3]);
-    Ta4_fromGuess = Output_PFR2(end,3);
-    TaError = abs((Ta4 -Ta4_fromGuess)/Ta4);
-    if guessTa3 > 1000
-        error('no solution to the PFR2 Scenario 2 found');
-    end
-    guessTa3 = guessTa3 + .1;
-end
+Output_PFR2 = SolveCounterCurrentPFR(scenarioParams, params, Ta4, T3, X3);
 
 X_PFR2 = Output_PFR2(:,1);
 T_PFR2 = Output_PFR2(:,2);
 Ta_PFR2 = Output_PFR2(:,3);
 
-X4 = X_PFR2(101);
-T4 = T_PFR2(101);
-Ta4 = Ta_PFR2(101);
+X4 = X_PFR2(end);
+T4 = T_PFR2(end);
+Ta4 = Ta_PFR2(end);
 
 subplot(4,1,1);
 plot(scenarioParams.VSpan, X_PFR1);

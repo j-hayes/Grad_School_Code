@@ -67,7 +67,7 @@ classdef ScenarioParameters
             obj.volumetricFlowRateFeed = .0037;%m^3/s
             obj.Fa0 = obj.Ca0*obj.volumetricFlowRateFeed;
             obj.Cps = 30;%cal/m
-            obj.mDotCp = .01; % mol/s
+            obj.mDotCp = .018; % mol/s
             obj.specificHeatCoolant = 1.685;%KJ/kg;
             obj.molecularWeightCoolant = 190;%g/mol
             obj.calPerkJ = (1/.004184);
