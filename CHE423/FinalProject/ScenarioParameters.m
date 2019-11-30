@@ -62,7 +62,7 @@ classdef ScenarioParameters
             obj.Ua = obj.U*obj.a;% (J/m^3 s K)
 
             obj.X0 = 0;
-            obj.Ca0 = 20; % mol/m^3
+            obj.Ca0 = 14.5; % mol/m^3
             obj.Cb0 = obj.Ca0;
             obj.volumetricFlowRateFeed = .0037;%m^3/s
             obj.Fa0 = obj.Ca0*obj.volumetricFlowRateFeed;

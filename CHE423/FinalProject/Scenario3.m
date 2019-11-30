@@ -23,7 +23,7 @@ params = [scenarioParams.Ca0; ...
 
 Output_PFR1 = SolveCounterCurrentPFR(scenarioParams, ...
             params, ...
-            scenarioParams.Ta0-50,...
+            scenarioParams.Ta0,...
             scenarioParams.T0,...
             scenarioParams.X0);
 
@@ -34,14 +34,13 @@ Ta_PFR1 = Output_PFR1(:,3);
 
 X2 = X_PFR1(end);
 T2 = T_PFR1(end);
-Ta2 = Ta_PFR1(end);
 
 [T3, X3] = AdiabaticCSTR(scenarioParams, X2,T2);%numerical guess and check for T3 and X3 in CSTR
 
 Ca3 = scenarioParams.Ca0*(1-X3);
 Cb3 = Ca3;
 Fa3 = scenarioParams.Fa0*(1-X3);
-Ta4 = Ta2; %outlet of jacket goes to inlet of other countercurrent jacket
+Ta4 = scenarioParams.Ta0; %outlet of jacket goes to inlet of other countercurrent jacket
 
 params = [Ca3 ;
     Cb3 ;  ...
