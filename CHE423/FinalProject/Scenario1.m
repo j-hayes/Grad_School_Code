@@ -1,4 +1,4 @@
-function Scenario1(scenarioParams)
+function Scenario1(scenarioParams, figureNumber)
 params = [scenarioParams.Ca0; ...
     scenarioParams.Cb0;...
     scenarioParams.volumetricFlowRateFeed;...
@@ -63,6 +63,7 @@ X4 = X_PFR2(end);
 T4 = T_PFR2(end);
 Ta4 = Ta_PFR2(end);
 
+figure(figureNumber);
 subplot(4,1,1);
 plot(scenarioParams.VSpan, X_PFR1);
 xlabel('Volume');

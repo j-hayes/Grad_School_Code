@@ -1,4 +1,4 @@
-function Scenario2(scenarioParams)
+function Scenario2(scenarioParams, figureNumber)
 %co-current pfr followed by adiabatic CSTR followed by a counter current pfr
 params = [scenarioParams.Ca0; ...
     scenarioParams.Cb0;...
@@ -62,6 +62,9 @@ Ta_PFR2 = Output_PFR2(:,3);
 X4 = X_PFR2(end);
 T4 = T_PFR2(end);
 Ta4 = Ta_PFR2(end);
+
+
+figure(figureNumber);
 
 subplot(4,1,1);
 plot(scenarioParams.VSpan, X_PFR1);

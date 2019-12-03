@@ -1,4 +1,4 @@
-function Scenario3(scenarioParams)
+function Scenario3(scenarioParams, figureNumber)
 %counter current pfr followed by adiabatic CSTR followed by a counter current pfr
 %inital temp of each jacket is the same temperature (the coolant feed is
 %split in two and enters the two jackets independently
@@ -74,6 +74,8 @@ X4 = X_PFR2(end);
 T4 = T_PFR2(end);
 Ta4 = Ta_PFR2(end);
 
+
+figure(figureNumber);
 subplot(4,1,1);
 plot(scenarioParams.VSpan, X_PFR1);
 xlabel('Volume');
