@@ -21,7 +21,7 @@ legend('error');
 title('Rate 1');
 
 subplot(3,2,2);
-plot(linSpace, rPrime,'x',linSpace, Yp, 'o');
+plot(linSpace, rPrime,'x',linSpace, rPrimeEstimated1, 'o');
 xlabel('Experiment');
 ylabel('rate mol / (g cat min)');
 legend('Actual','Estimated');
@@ -37,7 +37,7 @@ title('Rate 2');
 
 
 subplot(3,2,4);
-plot(linSpace, rPrime,'x',linSpace, Yp, 'o');
+plot(linSpace, rPrime,'x',linSpace, rPrimeEstimated2, 'o');
 xlabel('Experiment');
 ylabel('rate mol / (g cat min)');
 legend('Actual','Estimated');
@@ -80,7 +80,7 @@ K2 = theta(2);
 rPrimeEstimated = k.*Pa.*Pb./(1 + K1.*Pa + K2.*Pb);
 
 Yp = X*theta;
-rPrimeEstimated = Yp;
+%rPrimeEstimated = Yp;
 E = (1 - Yp./Y);
 end
 
@@ -100,10 +100,10 @@ K1 = theta(1);
 K2 = theta(2);
 k = theta(3);
 
-rPrimeEstimatedeq = k*Pa./(1 + K1*Pa + K2*Pb);
+rPrimeEstimated = k*Pa./(1 + K1*Pa + K2*Pb);
 
 Yp = X*theta;
-rPrimeEstimated = Yp;
+%rPrimeEstimated = Yp;
 
 E = (1 - Yp./Y);
 end
@@ -124,11 +124,11 @@ theta = X\Y;
 k = theta(3).^2;
 K1 = theta(1);
 K2 = theta(2);
-denominator = ((1 + K1*Pa + K2*Pb).^2)
-rPrimeEstimatedeq = (k.*Pa.*Pb)./denominator;
+denominator = ((1 + K1*Pa + K2*Pb).^2);
+rPrimeEstimated = (k.*Pa.*Pb)./denominator;
 
 Yp = X*theta;
-rPrimeEstimated = (Yp).^2;
+%rPrimeEstimated = (Yp).^2;
 
 E = (1 - Yp./Y);
 

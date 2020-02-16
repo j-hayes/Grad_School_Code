@@ -6,11 +6,11 @@ r = [4.9* 10^-4;1.1 *10^-4; 2.4 *10^-3; 2.2*10^-2 ; 1.18*10^-1];
 [X, Y, theta, Err, rEstimated, k0, E, n, e, Yp] = powerLaw(Ca, T, r, 8.314);
 
 subplot(2,1,1)
-plot(T, Y, 'o', T, Yp, 'x');
+plot(T, Y, 'o', T, Yp, 'x', T, Yp);
 xlabel('T');
-ylabel('Yi and Ypi');
-legend('Y', 'Yp');
-title('Power Law Errors');
+ylabel('Yi and Ypi (curve)');
+legend('Y', 'Yp points', 'Yp curve');
+title('Power Law');
 
 
 subplot(2,1,2)
@@ -18,7 +18,7 @@ plot(T, Err, 'o', T, zeros(5,1));
 xlabel('T');
 ylabel('Yi and Ypi');
 legend('relative error', 'Zero relative error');
-title('Power Law Errors');
+title('Power Law Rates');
 
 
 function [X, Y, theta, Err, rEstimated, k0, E, n, e, Yp] = powerLaw(Ca, T, r, R)
