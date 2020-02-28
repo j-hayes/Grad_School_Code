@@ -5,6 +5,15 @@ r = [4.9* 10^-4;1.1 *10^-4; 2.4 *10^-3; 2.2*10^-2 ; 1.18*10^-1];
 
 [X, Y, theta, Err, rEstimated, k0, E, n, e, Yp] = powerLaw(Ca, T, r, 8.314);
 
+X
+Y
+theta
+k0
+E
+n
+e
+rEstimated
+
 subplot(2,1,1)
 plot(T, Y, 'o', T, Yp, 'x', T, Yp);
 xlabel('T');

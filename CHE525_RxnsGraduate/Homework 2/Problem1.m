@@ -1,6 +1,9 @@
-Pa = [5;5;5;5;5;5;5;0.918;1.84;2.98;3.78;4.91];
-Pb = [.922;1.36;1.97;2.8;2.91;3.89;4.85;5;5;5;5;5];
-rPrime = [1.6;2.56;3.27;3.64;3.48;4.46;4.75;1.47;2.48;3.45;4.06;4.75];
+format shortEng
+format compact
+
+Pa = [5;5;5;5;5;5;5;0.918;1.84;2.98;3.78;4.91].*10^-2;
+Pb = [.922;1.36;1.97;2.8;2.91;3.89;4.85;5;5;5;5;5].*10^-2;
+rPrime = [1.6;2.56;3.27;3.64;3.48;4.46;4.75;1.47;2.48;3.45;4.06;4.75].*10^-5;
 
 [X1, Y1, theta1, E1, rPrimeEstimated1, k1, K11, K21,Yp1] = rate1CollectTerms(Pa,Pb,rPrime);
 [X2, Y2, theta2, E2, rPrimeEstimated2, k2, K12, K22,Yp2] = rate2CollectTerms(Pa,Pb,rPrime);
@@ -13,10 +16,44 @@ sigmaSquared3 = (1/(12-3))*sum(abs(Y3-Yp3).^2);
 zeroarr = zeros(12,1);
 linSpace = 1:1:12;
 
+X1 
+Y1
+theta1
+k1
+K11
+K21
+
+Yp1
+E1
+rPrimeEstimated1
+
+X2
+Y2
+theta2
+k2
+K12
+K22
+
+Yp2
+E2
+rPrimeEstimated1
+
+
+X3
+Y3
+theta3
+k3
+K13
+K23
+
+Yp3
+E3
+rPrimeEstimated3
+
 subplot(3,2,1);
 plot(linSpace, E1, 'o', linSpace, zeroarr);
 xlabel('Experiment');
-ylabel('rate mol / (g cat min)');
+ylabel('relative error)');
 legend('error');
 title('Rate 1');
 
@@ -31,7 +68,7 @@ title('Rate 1');
 subplot(3,2,3);
 plot(linSpace, E2, 'o', linSpace, zeroarr);
 xlabel('Experiment');
-ylabel('rate mol / (g cat min)');
+ylabel('relative error');
 legend('error');
 title('Rate 2');
 
@@ -47,7 +84,7 @@ title('Rate 2');
 subplot(3,2,5);
 plot(linSpace, E3, 'o', linSpace, zeroarr);
 xlabel('Experiment');
-ylabel('rate mol / (g cat min)');
+ylabel('relative error');
 legend('error');
 title('Rate 3');
 

@@ -20,6 +20,16 @@ rPrime = [
 
 [X, Y, theta, E, rPrimeEstimated, k, K1, K2,K3,Yp] = problem3Rate(Pa,Pb,Pc,rPrime);
 
+X
+Y
+theta
+k
+K1
+K2
+K3
+Yp
+rPrimeEstimated
+
 sigmaSquared1 = (1/(12-3))*sum(abs(Y-Yp).^2);
 zeroarr = zeros(12,1);
 linSpace = 1:1:12;
